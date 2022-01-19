@@ -125,8 +125,9 @@ class Circle {
         onTap == typedOther.onTap;
   }
 
-  static Set<googleMaps.Circle> toGoogleMapsCircleSet(Set<Circle> circles) {
-    List<googleMaps.Circle> _circles = <googleMaps.Circle>[];
+  static Set<googleMapsInterface.Circle> toGoogleMapsCircleSet(
+      Set<Circle> circles) {
+    List<googleMapsInterface.Circle> _circles = <googleMapsInterface.Circle>[];
     for (Circle circle in circles) {
       _circles.add(circle.googleMapsCircle);
     }
@@ -141,8 +142,8 @@ class Circle {
     return Set.from(_circles);
   }
 
-  googleMaps.Circle get googleMapsCircle => googleMaps.Circle(
-        circleId: googleMaps.CircleId(this.circleId.value),
+  googleMapsInterface.Circle get googleMapsCircle => googleMapsInterface.Circle(
+        circleId: googleMapsInterface.CircleId(this.circleId.value),
         consumeTapEvents: this.consumeTapEvents,
         fillColor: this.fillColor,
         onTap: this.onTap,

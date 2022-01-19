@@ -11,10 +11,11 @@ class BitmapDescriptor {
 
   /// Creates a BitmapDescriptor that refers to the default marker image.
   static BitmapDescriptor? get defaultMarker {
-    if (Platform.isIOS) {
+    if (kIsWeb || Platform.isAndroid) {
+      return BitmapDescriptor._(
+          googleMapsInterface.BitmapDescriptor.defaultMarker);
+    } else if (Platform.isIOS) {
       return BitmapDescriptor._(appleMaps.BitmapDescriptor.defaultAnnotation);
-    } else if (Platform.isAndroid) {
-      return BitmapDescriptor._(googleMaps.BitmapDescriptor.defaultMarker);
     }
     return null;
   }
@@ -32,15 +33,15 @@ class BitmapDescriptor {
     String? package,
   }) async {
     dynamic bitmap;
-    if (Platform.isIOS) {
-      bitmap = await appleMaps.BitmapDescriptor.fromAssetImage(
+    if (kIsWeb || Platform.isAndroid) {
+      bitmap = await googleMapsInterface.BitmapDescriptor.fromAssetImage(
         configuration,
         assetName,
         bundle: bundle,
         package: package,
       );
-    } else if (Platform.isAndroid) {
-      bitmap = await googleMaps.BitmapDescriptor.fromAssetImage(
+    } else if (Platform.isIOS) {
+      bitmap = await appleMaps.BitmapDescriptor.fromAssetImage(
         configuration,
         assetName,
         bundle: bundle,
@@ -53,8 +54,8 @@ class BitmapDescriptor {
   /// Creates a BitmapDescriptor using an array of bytes that must be encoded
   /// as PNG.
   static BitmapDescriptor fromBytes(Uint8List byteData) {
-    var bitmap = Platform.isAndroid
-        ? googleMaps.BitmapDescriptor.fromBytes(byteData)
+    var bitmap = kIsWeb || Platform.isAndroid
+        ? googleMapsInterface.BitmapDescriptor.fromBytes(byteData)
         : appleMaps.BitmapDescriptor.fromBytes(byteData);
     return BitmapDescriptor._(bitmap);
   }

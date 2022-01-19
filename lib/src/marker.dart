@@ -35,7 +35,8 @@ class InfoWindow {
         title: this.title,
       );
 
-  googleMaps.InfoWindow get googleMapsInfoWindow => googleMaps.InfoWindow(
+  googleMapsInterface.InfoWindow get googleMapsInfoWindow =>
+      googleMapsInterface.InfoWindow(
         anchor: this.anchor ?? Offset(0, 0),
         onTap: this.onTap,
         snippet: this.snippet,
@@ -73,7 +74,8 @@ class MarkerId {
         this.value,
       );
 
-  googleMaps.MarkerId get googleMapsMarkerId => googleMaps.MarkerId(
+  googleMapsInterface.MarkerId get googleMapsMarkerId =>
+      googleMapsInterface.MarkerId(
         this.value,
       );
 }
@@ -171,7 +173,7 @@ class Marker {
         position: this.position.appleLatLng,
       );
 
-  googleMaps.Marker get googleMapsMarker => googleMaps.Marker(
+  googleMapsInterface.Marker get googleMapsMarker => googleMapsInterface.Marker(
         markerId: this.markerId.googleMapsMarkerId,
         alpha: this.alpha,
         anchor: this.anchor,
@@ -182,7 +184,7 @@ class Marker {
             BitmapDescriptor.defaultMarker?.bitmapDescriptor,
         visible: this.visible,
         onDragEnd: this.onDragEnd != null
-            ? (googleMaps.LatLng latLng) =>
+            ? (googleMapsInterface.LatLng latLng) =>
                 _onGoogleMarkerDragEnd(latLng, this.onDragEnd)
             : null,
         position: this.position.googleLatLng,
@@ -206,8 +208,8 @@ class Marker {
         position: marker.position.appleLatLng,
       );
 
-  static googleMaps.Marker googleMapsMarkerFromMarker(Marker marker) =>
-      googleMaps.Marker(
+  static googleMapsInterface.Marker googleMapsMarkerFromMarker(Marker marker) =>
+      googleMapsInterface.Marker(
         markerId: marker.markerId.googleMapsMarkerId,
         alpha: marker.alpha,
         anchor: marker.anchor,
@@ -218,7 +220,7 @@ class Marker {
             BitmapDescriptor.defaultMarker?.bitmapDescriptor,
         visible: marker.visible,
         onDragEnd: marker.onDragEnd != null
-            ? (googleMaps.LatLng latLng) =>
+            ? (googleMapsInterface.LatLng latLng) =>
                 _onGoogleMarkerDragEnd(latLng, marker.onDragEnd)
             : null,
         position: marker.position.googleLatLng,
@@ -233,8 +235,9 @@ class Marker {
     return Set.from(_annotations);
   }
 
-  static Set<googleMaps.Marker> toGoogleMapsMarkerSet(Set<Marker> markers) {
-    List<googleMaps.Marker> _markers = <googleMaps.Marker>[];
+  static Set<googleMapsInterface.Marker> toGoogleMapsMarkerSet(
+      Set<Marker> markers) {
+    List<googleMapsInterface.Marker> _markers = <googleMapsInterface.Marker>[];
     for (Marker marker in markers) {
       _markers.add(googleMapsMarkerFromMarker(marker));
     }
@@ -266,12 +269,13 @@ class Marker {
     );
   }
 
-  static _onGoogleMarkerDragEnd(googleMaps.LatLng latLng, Function? onDragEnd) {
-    onDragEnd?.call(LatLng._fromGoogleLatLng(latLng));
+  static _onGoogleMarkerDragEnd(
+      googleMapsInterface.LatLng latLng, Function? onDragEnd) {
+    onDragEnd?.call(LatLng.fromGoogleLatLng(latLng));
   }
 
   static _onAppleAnnotationDragEnd(
       appleMaps.LatLng latLng, Function? onDragEnd) {
-    onDragEnd?.call(LatLng._fromAppleLatLng(latLng));
+    onDragEnd?.call(LatLng.fromAppleLatLng(latLng));
   }
 }

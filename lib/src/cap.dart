@@ -20,10 +20,10 @@ enum Cap {
 /// Cap that can be applied at the start or end vertex of a [Polyline].
 @immutable
 class _Cap {
-  static const Map<Cap, googleMaps.Cap> googleMapsCaps = {
-    Cap.buttCap: googleMaps.Cap.buttCap,
-    Cap.roundCap: googleMaps.Cap.roundCap,
-    Cap.squareCap: googleMaps.Cap.squareCap,
+  static const Map<Cap, googleMapsInterface.Cap> googleMapsCaps = {
+    Cap.buttCap: googleMapsInterface.Cap.buttCap,
+    Cap.roundCap: googleMapsInterface.Cap.roundCap,
+    Cap.squareCap: googleMapsInterface.Cap.squareCap,
   };
 
   static const Map<Cap, appleMaps.Cap> appleMapsCaps = {
@@ -32,7 +32,7 @@ class _Cap {
     Cap.squareCap: appleMaps.Cap.squareCap,
   };
 
-  static googleMaps.Cap googlePolylineCap(Cap cap) {
+  static googleMapsInterface.Cap googlePolylineCap(Cap cap) {
     return googleMapsCaps[cap]!;
   }
 

@@ -23,14 +23,14 @@ class PatternItem {
     return PatternItem._(<dynamic>['gap', length]);
   }
 
-  static googleMaps.PatternItem _googleMapsPatternItem(
+  static googleMapsInterface.PatternItem _googleMapsPatternItem(
       PatternItem patternItem) {
     if (patternItem._json[0] == 'dash') {
-      return googleMaps.PatternItem.dash(patternItem._json[1]);
+      return googleMapsInterface.PatternItem.dash(patternItem._json[1]);
     } else if (patternItem._json[0] == 'gap') {
-      return googleMaps.PatternItem.gap(patternItem._json[1]);
+      return googleMapsInterface.PatternItem.gap(patternItem._json[1]);
     }
-    return googleMaps.PatternItem.dot;
+    return googleMapsInterface.PatternItem.dot;
   }
 
   static appleMaps.PatternItem _appleMapsPatternItem(PatternItem patternItem) {
@@ -44,9 +44,9 @@ class PatternItem {
 
   final dynamic _json;
 
-  static List<googleMaps.PatternItem> getGoogleMapsPatternItemList(
+  static List<googleMapsInterface.PatternItem> getGoogleMapsPatternItemList(
       List<PatternItem> patternItems) {
-    List<googleMaps.PatternItem> googleMapsPatternItems = [];
+    List<googleMapsInterface.PatternItem> googleMapsPatternItems = [];
     patternItems.forEach((PatternItem patternItem) {
       googleMapsPatternItems.add(
         _googleMapsPatternItem(patternItem),

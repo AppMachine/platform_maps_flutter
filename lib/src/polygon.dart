@@ -125,8 +125,10 @@ class Polygon {
   @override
   int get hashCode => polygonId.hashCode;
 
-  static Set<googleMaps.Polygon> toGoogleMapsPolygonSet(Set<Polygon> polygons) {
-    List<googleMaps.Polygon> _polygons = <googleMaps.Polygon>[];
+  static Set<googleMapsInterface.Polygon> toGoogleMapsPolygonSet(
+      Set<Polygon> polygons) {
+    List<googleMapsInterface.Polygon> _polygons =
+        <googleMapsInterface.Polygon>[];
     for (Polygon polygon in polygons) {
       _polygons.add(polygon.googleMapsPolygon);
     }
@@ -141,8 +143,9 @@ class Polygon {
     return Set.from(_polygons);
   }
 
-  googleMaps.Polygon get googleMapsPolygon => googleMaps.Polygon(
-        polygonId: googleMaps.PolygonId(this.polygonId.value),
+  googleMapsInterface.Polygon get googleMapsPolygon =>
+      googleMapsInterface.Polygon(
+        polygonId: googleMapsInterface.PolygonId(this.polygonId.value),
         consumeTapEvents: this.consumeTapEvents,
         fillColor: this.fillColor,
         onTap: this.onTap,

@@ -4,6 +4,9 @@ typedef void MapCreatedCallback(PlatformMapController controller);
 
 typedef void CameraPositionCallback(CameraPosition position);
 
+/// Callback function taking a single argument.
+typedef void ArgumentCallback<T>(T argument);
+
 class PlatformMap extends StatefulWidget {
   const PlatformMap({
     Key? key,
@@ -170,7 +173,7 @@ class PlatformMap extends StatefulWidget {
 class _PlatformMapState extends State<PlatformMap> {
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
+    if (kIsWeb || Platform.isAndroid) {
       return googleMaps.GoogleMap(
         initialCameraPosition:
             widget.initialCameraPosition.googleMapsCameraPosition,
@@ -233,41 +236,41 @@ class _PlatformMapState extends State<PlatformMap> {
   }
 
   void _onMapCreated(dynamic controller) {
-    widget.onMapCreated?.call(PlatformMapController(controller));
+    widget.onMapCreated?.call(getController(controller));
   }
 
   void _onCameraMove(dynamic cameraPosition) {
-    if (Platform.isIOS) {
+    if (kIsWeb || Platform.isAndroid) {
+      widget.onCameraMove?.call(
+        CameraPosition.fromGoogleMapCameraPosition(
+          cameraPosition as googleMapsInterface.CameraPosition,
+        ),
+      );
+    } else if (Platform.isIOS) {
       widget.onCameraMove?.call(
         CameraPosition.fromAppleMapCameraPosition(
           cameraPosition as appleMaps.CameraPosition,
-        ),
-      );
-    } else if (Platform.isAndroid) {
-      widget.onCameraMove?.call(
-        CameraPosition.fromGoogleMapCameraPosition(
-          cameraPosition as googleMaps.CameraPosition,
         ),
       );
     }
   }
 
   void _onTap(dynamic position) {
-    if (Platform.isIOS) {
-      widget.onTap?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
-    } else if (Platform.isAndroid) {
-      widget.onTap
-          ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
+    if (kIsWeb || Platform.isAndroid) {
+      widget.onTap?.call(
+          LatLng.fromGoogleLatLng(position as googleMapsInterface.LatLng));
+    } else if (Platform.isIOS) {
+      widget.onTap?.call(LatLng.fromAppleLatLng(position as appleMaps.LatLng));
     }
   }
 
   void _onLongPress(dynamic position) {
-    if (Platform.isIOS) {
+    if (kIsWeb || Platform.isAndroid) {
+      widget.onLongPress?.call(
+          LatLng.fromGoogleLatLng(position as googleMapsInterface.LatLng));
+    } else if (Platform.isIOS) {
       widget.onLongPress
-          ?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
-    } else if (Platform.isAndroid) {
-      widget.onLongPress
-          ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
+          ?.call(LatLng.fromAppleLatLng(position as appleMaps.LatLng));
     }
   }
 
@@ -282,14 +285,14 @@ class _PlatformMapState extends State<PlatformMap> {
     return appleMaps.MapType.standard;
   }
 
-  googleMaps.MapType _getGoogleMapType() {
+  googleMapsInterface.MapType _getGoogleMapType() {
     if (widget.mapType == MapType.normal) {
-      return googleMaps.MapType.normal;
+      return googleMapsInterface.MapType.normal;
     } else if (widget.mapType == MapType.satellite) {
-      return googleMaps.MapType.satellite;
+      return googleMapsInterface.MapType.satellite;
     } else if (widget.mapType == MapType.hybrid) {
-      return googleMaps.MapType.hybrid;
+      return googleMapsInterface.MapType.hybrid;
     }
-    return googleMaps.MapType.normal;
+    return googleMapsInterface.MapType.normal;
   }
 }

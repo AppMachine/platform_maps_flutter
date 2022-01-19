@@ -23,10 +23,10 @@ class LatLng {
   @override
   String toString() => '$runtimeType($latitude, $longitude)';
 
-  static LatLng _fromAppleLatLng(appleMaps.LatLng latLng) =>
+  static LatLng fromAppleLatLng(appleMaps.LatLng latLng) =>
       LatLng(latLng.latitude, latLng.longitude);
 
-  static LatLng _fromGoogleLatLng(googleMaps.LatLng latLng) =>
+  static LatLng fromGoogleLatLng(googleMapsInterface.LatLng latLng) =>
       LatLng(latLng.latitude, latLng.longitude);
 
   appleMaps.LatLng get appleLatLng => appleMaps.LatLng(
@@ -34,14 +34,14 @@ class LatLng {
         this.longitude,
       );
 
-  googleMaps.LatLng get googleLatLng => googleMaps.LatLng(
+  googleMapsInterface.LatLng get googleLatLng => googleMapsInterface.LatLng(
         this.latitude,
         this.longitude,
       );
 
-  static List<googleMaps.LatLng> googleMapsLatLngsFromList(
+  static List<googleMapsInterface.LatLng> googleMapsLatLngsFromList(
       List<LatLng> latlngs) {
-    List<googleMaps.LatLng> googleMapsLatLngs = [];
+    List<googleMapsInterface.LatLng> googleMapsLatLngs = [];
     latlngs.forEach((LatLng latlng) {
       googleMapsLatLngs.add(latlng.googleLatLng);
     });
@@ -65,16 +65,17 @@ class LatLngBounds {
   LatLngBounds({required this.southwest, required this.northeast})
       : assert(southwest.latitude <= northeast.latitude);
 
-  static LatLngBounds _fromAppleLatLngBounds(appleMaps.LatLngBounds bounds) =>
+  static LatLngBounds fromAppleLatLngBounds(appleMaps.LatLngBounds bounds) =>
       LatLngBounds(
-        southwest: LatLng._fromAppleLatLng(bounds.southwest),
-        northeast: LatLng._fromAppleLatLng(bounds.northeast),
+        southwest: LatLng.fromAppleLatLng(bounds.southwest),
+        northeast: LatLng.fromAppleLatLng(bounds.northeast),
       );
 
-  static LatLngBounds _fromGoogleLatLngBounds(googleMaps.LatLngBounds bounds) =>
+  static LatLngBounds fromGoogleLatLngBounds(
+          googleMapsInterface.LatLngBounds bounds) =>
       LatLngBounds(
-        southwest: LatLng._fromGoogleLatLng(bounds.southwest),
-        northeast: LatLng._fromGoogleLatLng(bounds.northeast),
+        southwest: LatLng.fromGoogleLatLng(bounds.southwest),
+        northeast: LatLng.fromGoogleLatLng(bounds.northeast),
       );
 
   /// The southwest corner of the rectangle.
@@ -88,7 +89,8 @@ class LatLngBounds {
         northeast: this.northeast.appleLatLng,
       );
 
-  googleMaps.LatLngBounds get googleLatLngBounds => googleMaps.LatLngBounds(
+  googleMapsInterface.LatLngBounds get googleLatLngBounds =>
+      googleMapsInterface.LatLngBounds(
         southwest: this.southwest.googleLatLng,
         northeast: this.northeast.googleLatLng,
       );

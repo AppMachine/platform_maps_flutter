@@ -12,10 +12,11 @@ class JointType {
   /// The value representing the [JointType] on the sdk.
   final int value;
 
-  static const List<googleMaps.JointType> googleMapsJointTypes = const [
-    googleMaps.JointType.mitered,
-    googleMaps.JointType.bevel,
-    googleMaps.JointType.round,
+  static const List<googleMapsInterface.JointType> googleMapsJointTypes =
+      const [
+    googleMapsInterface.JointType.mitered,
+    googleMapsInterface.JointType.bevel,
+    googleMapsInterface.JointType.round,
   ];
 
   static const List<appleMaps.JointType> appleMapsJointTypes = const [
@@ -39,7 +40,8 @@ class JointType {
   /// Constant Value: 2
   static const JointType round = JointType._(2);
 
-  static googleMaps.JointType getGoogleMapsJointType(JointType jointType) {
+  static googleMapsInterface.JointType getGoogleMapsJointType(
+      JointType jointType) {
     return googleMapsJointTypes[jointType.value];
   }
 

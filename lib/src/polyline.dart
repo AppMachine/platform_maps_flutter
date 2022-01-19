@@ -10,8 +10,8 @@ class PolylineId {
   /// value of the [PolylineId].
   final String value;
 
-  googleMaps.PolylineId googleMapsPolylineId() {
-    return googleMaps.PolylineId(
+  googleMapsInterface.PolylineId googleMapsPolylineId() {
+    return googleMapsInterface.PolylineId(
       value,
     );
   }
@@ -106,12 +106,12 @@ class Polyline {
   /// Callbacks to receive tap events for polyline placed on this map.
   final VoidCallback? onTap;
 
-  static Set<googleMaps.Polyline> toGoogleMapsPolylines(
+  static Set<googleMapsInterface.Polyline> toGoogleMapsPolylines(
       Set<Polyline> polylines) {
-    Set<googleMaps.Polyline> googleMapsPolylines = Set();
+    Set<googleMapsInterface.Polyline> googleMapsPolylines = Set();
     polylines.forEach((Polyline polyline) {
       googleMapsPolylines.add(
-        googleMaps.Polyline(
+        googleMapsInterface.Polyline(
           polylineId: polyline.polylineId.googleMapsPolylineId(),
           color: polyline.color,
           consumeTapEvents: polyline.consumeTapEvents,
